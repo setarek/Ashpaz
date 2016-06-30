@@ -50,15 +50,17 @@
 
 				$user = $_SESSION['email'];
 
-				$is_chef = "select * from users where email='$user' and catering_name is not not";
-				$run_is_chef = mysqli_query($conn,$is_chef);
-				$check_is_chef = mysqli_num_rows($run_is_chef);
+				$chef = "select * from users where email='$user' and catering_name is not not";
+				$run_chef = mysqli_query($conn, $chef);
+				if (!$run_chef) {
+    printf("Error: %s\n", mysqli_error($conn));
+    exit();
+}
+				$row_chef = mysqli_fetch_array($run_chef);
+				$is_chef = $row_chef['catering_name'];
 				
-				if ($run_is_chef==1) {
-					header("location: page1.php");
-				}else{
-					header("location: page2.php");
-				}
+				
+				echo $is_chef;
 
 
 		}
